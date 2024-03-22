@@ -26,12 +26,29 @@ class =  title (?)
 - (maybe) undo prev step
 */
 
-import { sidePanel, mainPage } from './base.js';
+import { sidePanel, mainPage, addProjBtn } from './base.js';
 
+let formInput;
 
 export default function createProj() {
-    const projs = document.createElement('h3');
-    projs.textContent = "Projects";
 
-    sidePanel.appendChild(projs);
+    function addNewProject() {
+        const inputContainer = document.createElement('div');
+        inputContainer.classList.add("input-container");
+
+        formInput = document.createElement('input');
+        formInput.classList.add('form-input');
+        inputContainer.appendChild(formInput);
+
+        const inputConfirm = document.createElement("button");
+        inputConfirm.classList.add("input-tick");
+        inputConfirm.textContent = '\u2713';
+        inputContainer.appendChild(inputConfirm);
+
+        sidePanel.insertBefore(inputContainer, addProjBtn);
+        sidePanel.insertBefore(document.createElement("br"),addProjBtn);
+    }
+
+    addProjBtn.addEventListener('click', () => formInput || addNewProject());
+
 };

@@ -5,8 +5,8 @@
   "private": true,
   "watch": {
     "build": {
-        "patterns": ["todo/src/*.js", "todo/src/modules/*.js"],
-        "extensions": "js",
+        "patterns": ["todo/src/*.js", "todo/src/modules/*.js","todo/src/*.css"],
+        "extensions": ["js", "css"],
         "quiet": true,
         "runOnChangeOnly": false
     }

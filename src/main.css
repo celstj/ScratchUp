@@ -38,6 +38,67 @@ footer {
     background-color: var(--d-sage);
 }
 
+h3 {
+    margin-left: 10px;
+    color: #293b3b; 
+    font-size: 20px;   
+}
+
+.projBtn {
+    position: relative;
+    left: 28%;
+    margin: 10px;
+    border-radius: 100%;
+    width: 70px;
+    height: 70px;
+    font-size: 50px;
+    background-color: var(--o-white);
+    border: solid 1px var(--d-green);
+    color: var(--d-green);
+}
+
+.projBtn:hover {
+    cursor: pointer;
+    background-color: var(--d-green);
+    color: var(--o-white);
+}
+
+.projBtn:active {
+    box-shadow: 2px 2px 4px rgba(35, 103, 231, 0.2);
+}
+
+.input-container {
+    position: relative;
+    width:200px;
+}
+
+.form-input {
+    height: 25px;
+    border-radius: 10px;
+    margin: 10px;
+    padding-right: 10px;
+    text-align: center;
+    font-size: 17px;
+    color: var(--d-green);
+    border: 0.5px var(--d-green);
+}
+
+.input-tick {
+    position: absolute;
+    right: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    font-size: 16px;
+    border-radius: 100%;
+    border: 1px solid var(--d-green);
+}
+
+.input-tick:active {
+    box-shadow: 2px 2px 4px rgba(35, 103, 231, 0.2);
+}
+
 nav {
     padding: 20px;
 }
@@ -50,9 +111,12 @@ li {
     margin: 5px;
 }
 
+.main-list {
+    font-size: 20px;
+}
+
 a {
     color: var(--o-white);
-    font-size: 20px;
     text-decoration: none;
     font-weight: bold;
 }

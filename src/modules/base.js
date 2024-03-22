@@ -28,6 +28,7 @@ IMPORT ALL MODULES
 
 let _sidePanel;
 let _mainPage;
+let _addProj;
 
 export default function base() {
 
@@ -60,12 +61,13 @@ export default function base() {
 
         const mainLinks = [
             {text: 'Home', url: 'index.html'},
-            {text: 'Today', url: '/'},
+            {text: 'Today', url: '#'},
         ];
 
         mainLinks.forEach(link => {
             const mainLi = document.createElement('li');
             const anchor = document.createElement('a');
+            mainLi.classList.add('main-list');
             anchor.textContent = link.text;
             anchor.href = link.url;
             mainLi.appendChild(anchor);
@@ -79,6 +81,19 @@ export default function base() {
 
     const navElement = navigation();
     _sidePanel.appendChild(navElement);
+
+    const projs = document.createElement('h3');
+    projs.textContent = "Projects";
+
+    _sidePanel.appendChild(projs);
+
+    _addProj = document.createElement('button');
+    _addProj.classList.add('projBtn');
+    _addProj.textContent = '+';
+    _sidePanel.appendChild(_addProj);
 };
 
-export {_sidePanel as sidePanel, _mainPage as mainPage};
+export {
+    _sidePanel as sidePanel, 
+    _mainPage as mainPage,
+    _addProj as addProjBtn};
