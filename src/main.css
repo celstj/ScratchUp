@@ -53,7 +53,6 @@ h3 {
     height: 70px;
     font-size: 50px;
     background-color: var(--o-white);
-    border: solid 1px var(--d-green);
     color: var(--d-green);
 }
 
@@ -83,9 +82,8 @@ h3 {
     border: 0.5px var(--d-green);
 }
 
-.input-tick {
+.input-btn {
     position: absolute;
-    right: -40px;
     top: 50%;
     transform: translateY(-50%);
     width: 20px;
@@ -95,8 +93,16 @@ h3 {
     border: 1px solid var(--d-green);
 }
 
-.input-tick:active {
+.input-btn:active {
     box-shadow: 2px 2px 4px rgba(35, 103, 231, 0.2);
+}
+
+.input-tick {
+    right: -15px;
+}
+
+.input-cross {
+    right: -40px;
 }
 
 nav {

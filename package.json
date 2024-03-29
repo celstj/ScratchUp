@@ -5,10 +5,17 @@
   "private": true,
   "watch": {
     "build": {
-        "patterns": ["todo/src/*.js", "todo/src/modules/*.js","todo/src/*.css"],
-        "extensions": ["js", "css"],
-        "quiet": true,
-        "runOnChangeOnly": false
+      "patterns": [
+        "todo/src/*.js",
+        "todo/src/modules/*.js",
+        "todo/src/*.css"
+      ],
+      "extensions": [
+        "js",
+        "css"
+      ],
+      "quiet": true,
+      "runOnChangeOnly": false
     }
   },
   "scripts": {
@@ -35,6 +42,7 @@
   },
   "dependencies": {
     "date-fns": "^3.2.0",
+    "eslint": "^8.57.0",
     "lodash": "^4.17.21",
     "npm-watch": "^0.11.0"
   }

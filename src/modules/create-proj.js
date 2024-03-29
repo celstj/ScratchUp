@@ -41,9 +41,14 @@ export default function createProj() {
         inputContainer.appendChild(formInput);
 
         const inputConfirm = document.createElement("button");
-        inputConfirm.classList.add("input-tick");
+        inputConfirm.classList.add("input-tick", "input-btn");
         inputConfirm.textContent = '\u2713';
         inputContainer.appendChild(inputConfirm);
+
+        const inputCancel = document.createElement("button");
+        inputCancel.classList.add("input-cross", "input-btn");
+        inputCancel.textContent = '\u2715';
+        inputContainer.appendChild(inputCancel);
 
         sidePanel.insertBefore(inputContainer, addProjBtn);
         sidePanel.insertBefore(document.createElement("br"),addProjBtn);
