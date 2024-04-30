@@ -9,8 +9,9 @@
     padding: 0;
 }
 
+
 header {
-    position: absolute;
+    position: inline-block;
     height: 100px;
     width: 100%;
     text-align: center;
@@ -31,11 +32,46 @@ footer {
     right: 5%;
 }
 
+/* 
+-
+SIDE PANEL CSS
+-
+*/
+
 .side-panel {
     position: absolute;
     height: 100vh;
     width: 250px;
     background-color: var(--d-sage);
+}
+
+nav {
+    margin: 20px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    margin: 5px;
+    list-style-type: none;
+}
+
+.main-list {
+    font-size: 20px;
+}
+
+a {
+    color: var(--o-white);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+h2 {
+    color: var(--d-sage);
+    margin-left: 30px;
+    font-size: 30px;
 }
 
 h3 {
@@ -69,6 +105,7 @@ h3 {
 .input-container {
     position: relative;
     width:200px;
+    display:block;
 }
 
 .form-input {
@@ -105,31 +142,26 @@ h3 {
     right: -40px;
 }
 
-nav {
-    padding: 20px;
+.project-list {
+    color : var(--o-white);
+    font-size: 18px;
+    margin-left: 10px;
 }
 
-ul {
-    list-style-type: none;
-}
 
-li {
-    margin: 5px;
-}
-
-.main-list {
-    font-size: 20px;
-}
-
-a {
-    color: var(--o-white);
-    text-decoration: none;
-    font-weight: bold;
-}
-
+/*
+-
+MAIN PAGE CSS
+-
+*/
 
 .main-page {
     height: 100vh;
     background-color: var(--o-white);
+    margin-left: 250px;
+}
 
+.proj-pages {
+    position: relative;
+    margin-left: 20px;
 }
