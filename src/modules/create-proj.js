@@ -82,9 +82,6 @@ export default function createProj() {
     
     // grab input value and push into 'project list' array
     function createProjectList(projectName) {
-        // _projUl = document.createElement('ul');
-        const p_listItem = document.createElement('li');
-        const p_link = document.createElement('a');
         const untitled = "untitled" + counter;
         const projectTitle = projectName || untitled;
         const modifiedId = projectTitle.replace(/\s+/g, '-');
@@ -92,31 +89,41 @@ export default function createProj() {
         // increment counter after setting href, for unique 'untitled' projects
         counter++;
 
+        const p_listItem = document.createElement('li');
+        const p_link = document.createElement('a');
+
         // attach input string to link text or "untitled" if String = empty
         p_link.textContent = projectTitle;
         p_link.classList.add('project-list');
         p_link.href = `#${modifiedId}`;
 
         p_listItem.appendChild(p_link);
-
         _projUl.appendChild(p_listItem);
-        ///TODO : stock projectList into a database save etcetc
-    
-        projectList.push(projectTitle);
+        ///
+        ///!! TODO : stock projectList into a database save etcetc
+        //
+
+        // new proejct object with name and empty tasks array
+
+        projectList.push({
+            name: projectTitle,
+            tasks: [],
+            checklist: [],
+            notes: []
+        });
         createProjectMainSpace(projectTitle);
     }
     
-    let mainProjCont;
 
-    function createProjectMainSpace(projectTitle) {
-        const modifiedId = projectTitle.replace(/\s+/g, '-');
+    function createProjectMainSpace(project) {
+        const modifiedId = project.name.replace(/\s+/g, '-');
 
-        mainProjCont = document.createElement('div');
+        const mainProjCont = document.createElement('div');
         mainProjCont.setAttribute('id', modifiedId);
         mainProjCont.classList.add('proj-pages');
 
         const mainProjContTitle = document.createElement('h2');
-        mainProjContTitle.textContent = projectTitle;
+        mainProjContTitle.textContent = project.name;
 
         mainProjCont.appendChild(mainProjContTitle);
         mainPage.appendChild(mainProjCont);
@@ -124,46 +131,45 @@ export default function createProj() {
         mainProjCont.style.display = 'none';
     }
 
-    function handleSideProjectLinks() {
-        let activeSectionId = null;
 
-        // handle dynamically added project list links
-        document.addEventListener('click', (e) => {
-            const clickedProjectList = e.target;
+    // handle dynamically added project list links
+    document.addEventListener('click', (e) => {
+        const clickedProjectList = e.target;
 
-            if (clickedProjectList.classList.contains('project-list')) {
-                e.preventDefault();
-                const sectionId = clickedProjectList.getAttribute('href').substring(1);
-                toggleSectionVisibility(sectionId);
+        if (clickedProjectList.classList.contains('project-list')) {
+            e.preventDefault();
+            const sectionId = clickedProjectList.getAttribute('href').substring(1);
+            toggleSectionVisibility(sectionId);
+        }
+    });
+
+    let activeSectionId = null;
+
+    function toggleSectionVisibility(sectionId) {
+        const section = document.getElementById(sectionId);
+
+        if (activeSectionId !== sectionId) {
+            const activeSection = document.getElementById(activeSectionId);
+
+            if (activeSection) {
+                activeSection.style.display = 'none';
+                console.log("previops active section: " + activeSection);
+            } 
+            if (section) {
+                section.style.display = 'block';
+                activeSectionId = sectionId;
+                console.log("current active section: " + activeSectionId);
+            }    
+        }
+
+        //hide other sections
+        const allSections = document.querySelectorAll('.proj-pages');
+        allSections.forEach(section => {
+            if (section.id !== sectionId) {
+                section.style.display = 'none';
             }
         });
-
-        function toggleSectionVisibility(sectionId) {
-            const section = document.getElementById(sectionId);
-
-            if (activeSectionId !== sectionId) {
-                const activeSection = document.getElementById(activeSectionId);
-
-                if (activeSection) {
-                    activeSection.style.display = 'none';
-                    console.log("previops active section: " + activeSection);
-                } 
-                if (section) {
-                    section.style.display = 'block';
-                    activeSectionId = sectionId;
-                    console.log("current active section: " + activeSectionId);
-                }    
-            }
-
-            //hide other sections
-            const allSections = document.querySelectorAll('.proj-pages');
-            allSections.forEach(section => {
-                if (section.id !== sectionId) {
-                    section.style.display = 'none';
-                }
-            });
-        }
-}
+    }
 
     document.addEventListener('DOMContentLoaded', handleSideProjectLinks);
 };

@@ -24,6 +24,26 @@ IMPORT BASE
 - (maybe) undo prev step
 */
 
-export function createTask() {
+import { sidePanel, mainPage, addProjBtn, _projUl, projectList } from './base.js';
+// import { newProject } from './create-proj.js';
 
+export function createTask(projectName, taskTitle, taskDescription, taskDueDate, taskPriority) {
+
+    const project = projectList.find(proj => proj.name === projectName);
+
+    if (project) {
+        const newTask = {
+            title: taskTitle,
+            description: taskDescription,
+            dueDate: taskDueDate,
+            priority: taskPriority
+        };
+
+        project.tasks.push(newTask);
+
+        // Add UI logic to display the new task list
+        // For example, you can create DOM elements and append them to the page
+    } else {
+        console.error(`Project ${projectName} not found.`);
+    }
 };
