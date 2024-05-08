@@ -115,15 +115,15 @@ export default function createProj() {
     }
     
 
-    function createProjectMainSpace(project) {
-        const modifiedId = project.name.replace(/\s+/g, '-');
+    function createProjectMainSpace(projectTitle) {
+        const modifiedId = projectTitle.replace(/\s+/g, '-');
 
         const mainProjCont = document.createElement('div');
         mainProjCont.setAttribute('id', modifiedId);
         mainProjCont.classList.add('proj-pages');
 
         const mainProjContTitle = document.createElement('h2');
-        mainProjContTitle.textContent = project.name;
+        mainProjContTitle.textContent = projectTitle;
 
         mainProjCont.appendChild(mainProjContTitle);
         mainPage.appendChild(mainProjCont);
@@ -153,7 +153,7 @@ export default function createProj() {
 
             if (activeSection) {
                 activeSection.style.display = 'none';
-                console.log("previops active section: " + activeSection);
+                console.log("previops active section: " + activeSection.value);
             } 
             if (section) {
                 section.style.display = 'block';
@@ -171,5 +171,5 @@ export default function createProj() {
         });
     }
 
-    document.addEventListener('DOMContentLoaded', handleSideProjectLinks);
+    // document.addEventListener('DOMContentLoaded', handleSideProjectLinks);
 };
