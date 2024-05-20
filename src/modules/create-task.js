@@ -24,10 +24,10 @@ IMPORT BASE
 - (maybe) undo prev step
 */
 
-import { sidePanel, mainPage, addProjBtn, _projUl, projectList } from './base.js';
+// import { sidePanel, mainPage, addProjBtn, _projUl, projectList } from './base.js';
 // import { newProject } from './create-proj.js';
 
-export function createTask(projectName, taskTitle, taskDescription, taskDueDate, taskPriority) {
+// export function createTask(projectName, taskTitle, taskDescription, taskDueDate, taskPriority) {
 
     // const project = projectList.find(proj => proj.name === projectName);
 
@@ -46,4 +46,4 @@ export function createTask(projectName, taskTitle, taskDescription, taskDueDate,
     // } else {
     //     console.error(`Project ${projectName} not found.`);
     // }
-};
+// };

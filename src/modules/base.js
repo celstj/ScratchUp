@@ -1,89 +1,50 @@
-// import '../main.css';
-/*
-IMPORT ALL MODULES
+import {
+    createProjectList,
+} from './create-proj.js';
 
+let _sidePanel, _mainPage, addProjBtn, _projUl;
+let _projectList = [];
 
+function baseDefault() {
+    const header = document.createElement('header');
+    const footer = document.createElement('footer');
 
-- side panel
-    - nav list(?)
-- logo/hamburg
+    header.textContent = 'To do List';
+    _mainPage.classList.add('main-page');
+    _mainPage.appendChild(header);
 
-    side panel
-        - show project title (array)? (edit, delete)
-        - show task list inside title (edit, delete)
-        - new project ( on main side panel )
-        - new task  (next to project name (+) icon )
+    _sidePanel.classList.add('side-panel');
 
-    workspace
-        - project title
-        - task list (title, desc, duedate, priority) (edit, delete btn)
-        - new task  (inside project, giant (+) icon somewhere)
+    footer.textContent = 'This is a footer, Odin Project @ celjst';
 
+    return [_sidePanel, _mainPage, footer];
+}
 
-    ((potential
-        - today tab
-        - tomorrow tab
-        - upcoming tab
-*/
+function createNavigation() {
+    const nav = document.createElement('nav');
+    const ul = document.createElement('ul');
 
-let _sidePanel, _mainPage, _addProj, _projUl;
+    const mainLinks = [
+        { text: 'Home', url: 'index.html' },
+        { text: 'Today', url: '#' },
+    ];
 
-const _projectList = [];
+    mainLinks.forEach(link => {
+        const mainLi = document.createElement('li');
+        const anchor = document.createElement('a');
+        anchor.textContent = link.text;
+        anchor.href = link.url;
+        mainLi.classList.add('main-list');
+        mainLi.appendChild(anchor);
+        ul.appendChild(mainLi);
+    });
 
-export default function base() {
+    nav.appendChild(ul);
 
-    _sidePanel = document.createElement('div');
-    _mainPage = document.createElement('div');
+    return nav;
+}
 
-    function baseDefault(){
-        const header = document.createElement('header');
-        const footer = document.createElement('footer');
-    
-        header.textContent = 'To do List';
-        _mainPage.classList.add('main-page');
-        _mainPage.appendChild(header);
-
-        _sidePanel.classList.add('side-panel');
-
-        footer.textContent = 'this is a footer, Odin Project @ celjst';
-    
-        return [_sidePanel, _mainPage, footer];
-    }
-
-    const [sidePanel, mainPage, footer] = baseDefault();
-        
-    document.body.appendChild(sidePanel);
-    document.body.appendChild(mainPage);
-    document.body.appendChild(footer);
-
-
-    function navigation() {
-        const nav = document.createElement('nav');
-        const ul = document.createElement('ul');
-
-        const mainLinks = [
-            {text: 'Home', url: 'index.html'},
-            {text: 'Today', url: '#'},
-        ];
-
-        mainLinks.forEach(link => {
-            const mainLi = document.createElement('li');
-            const anchor = document.createElement('a');
-            mainLi.classList.add('main-list');
-            anchor.textContent = link.text;
-            anchor.href = link.url;
-            mainLi.appendChild(anchor);
-            ul.appendChild(mainLi);
-        });
-
-        nav.appendChild(ul);
-
-        return nav;
-    }
-
-    const navElement = navigation();
-    _sidePanel.appendChild(navElement);
-
+function createProjectContainer() {
     const projContainer = document.createElement('div');
     projContainer.classList.add('project-container');
     const projListTitle = document.createElement('h3');
@@ -94,47 +55,98 @@ export default function base() {
     projContainer.appendChild(projListTitle);
     projContainer.appendChild(projNav);
     projNav.appendChild(_projUl);
+
+    return projContainer;
+}
+
+function createAddProjectButton() {
+    addProjBtn = document.createElement('button');
+    addProjBtn.classList.add('projBtn');
+    addProjBtn.textContent = '+';
+    _sidePanel.appendChild(addProjBtn);
+}
+
+function saveProjectListToLocal() {
+    localStorage.setItem('projectList', JSON.stringify(_projectList));
+}
+
+function restoreProjectList() {
+    const storedProjects = localStorage.getItem('projectList');
+    if (storedProjects) {
+        _projectList = JSON.parse(storedProjects);
+        console.log("DATA restored");
+        renderProjectList();
+    }else {
+        console.log("unable to restore DATA");
+    }
+}
+
+function renderProjectList() {
+    _projUl.innerHTML = '';
+    _projectList.forEach(project => {
+        createProjectListItem(project);
+        createProjectMainSpace(project);
+    });
+}
+
+function createProjectListItem(project) {
+    const projectTitle = project.name;
+    const modifiedId = projectTitle.replace(/\s+/g, '-');
+
+    console.log("project name:createListItem: ",project.name);
+
+    const p_listItem = document.createElement('li');
+    const p_link = document.createElement('a');
+    p_link.textContent = projectTitle;
+    p_link.classList.add('project-list');
+    p_link.href = `#${modifiedId}`;
+    p_listItem.appendChild(p_link);
+    _projUl.appendChild(p_listItem);
+}
+
+function createProjectMainSpace(project) {
+    const projectName = project.name || "untitled";
+    const modifiedId = projectName.replace(/\s+/g, '-');
+
+    const mainProjCont = document.createElement('div');
+    mainProjCont.setAttribute('id', modifiedId);
+    mainProjCont.classList.add('proj-pages');
+
+    const mainProjContTitle = document.createElement('h2');
+    mainProjContTitle.textContent = projectName;
+
+    mainProjCont.appendChild(mainProjContTitle);
+    _mainPage.appendChild(mainProjCont);
+    mainProjCont.style.display = 'none';
+}
+
+function initBaseElements() {
+    _sidePanel = document.createElement('div');
+    _mainPage = document.createElement('div');
+
+    const [sidePanel, mainPage, footer] = baseDefault();
+    document.body.appendChild(sidePanel);
+    document.body.appendChild(mainPage);
+    document.body.appendChild(footer);
+
+    const navElement = createNavigation();
+    _sidePanel.appendChild(navElement);
+
+    const projContainer = createProjectContainer();
     _sidePanel.appendChild(projContainer);
 
-    _addProj = document.createElement('button');
-    _addProj.classList.add('projBtn');
-    _addProj.textContent = '+';
-    _sidePanel.appendChild(_addProj);
-
-    function starterProjectList() {
-        const p_listItem = document.createElement('li');
-        const p_link = document.createElement('a');
-        const starterTitle = 'workout';
-
-        p_link.textContent = starterTitle;
-        p_link.classList.add('project-list');
-        p_link.href = '#workout';
-
-        p_listItem.appendChild(p_link);
-        _projUl.appendChild(p_listItem);
-    
-        _projectList.push(starterTitle);
-
-        const starterProjCont = document.createElement('div');
-        starterProjCont.setAttribute('id', 'workout');
-        starterProjCont.classList.add('proj-pages');
-        starterProjCont.style.display = 'none';
-
-        const starterContTitle = document.createElement('h2');
-        starterContTitle.textContent = 'Workout';
-
-        starterProjCont.appendChild(starterContTitle);
-        mainPage.appendChild(starterProjCont);
-        
-    }
-
-    document.addEventListener('DOMContentLoaded', starterProjectList);
-};
+    createAddProjectButton();
+}
 
 export {
-    _sidePanel as sidePanel, 
-    _mainPage as mainPage,
-    _addProj as addProjBtn,
-    _projUl as _projUl,
-    _projectList as projectList
+    _sidePanel,
+    addProjBtn,
+    _projUl,
+    _projectList,
+    restoreProjectList,
+    saveProjectListToLocal,
+    renderProjectList,
+    createProjectListItem,
+    createProjectMainSpace,
+    initBaseElements
 };
