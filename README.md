@@ -1,5 +1,7 @@
 TODO list project for The Odin
 
+LIVE: https://celstj.github.io/todo/
+
 todo lol
  - layout setup
  !!- project div
