@@ -2,6 +2,7 @@ import './main.css';
 import _ from 'lodash';  // Import lodash if needed
 import {
     _sidePanel,
+    _mainPage,
     addProjBtn,
     _projUl,
     _projectList,
@@ -10,13 +11,17 @@ import {
 } from '../src/modules/base.js';
 
 import {
-    createInputElements,
+    createInputContainer,
+    placeInputContainerOnSide,
 } from '../src/modules/ui.js';
 
 import {
-    createProjectList,
-    toggleSectionVisibility
-} from '../src/modules/create-proj.js';
+    checkProjectList,
+    toggleSectionVisibility,
+    renderProjectList,
+    createProjectListItem,
+    createProjectMainSpace
+} from './modules/proj.js';
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -28,14 +33,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add starter project if no projects exist in local storage
     if (!_projectList.length) {
-        createProjectList('workout');  // false indicates not to add to storage again
+        checkProjectList('workout');  // false indicates not to add to storage again
     }
 
     // Initialize the UI related to project creation
     addProjBtn.addEventListener('click', () => {
         const inputContainer = document.querySelector('.input-container');
         if (!inputContainer) {
-            createInputElements();
+            createInputContainer();
+            placeInputContainerOnSide(createInputContainer(), _sidePanel, addProjBtn);
         }
     });
 

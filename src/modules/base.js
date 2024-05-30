@@ -1,6 +1,10 @@
 import {
-    createProjectList,
-} from './create-proj.js';
+    checkProjectList,
+    toggleSectionVisibility,
+    renderProjectList,
+    createProjectListItem,
+    createProjectMainSpace
+} from './proj.js';
 
 let _sidePanel, _mainPage, addProjBtn, _projUl;
 let _projectList = [];
@@ -9,7 +13,7 @@ function baseDefault() {
     const header = document.createElement('header');
     const footer = document.createElement('footer');
 
-    header.textContent = 'To do List';
+    header.textContent = 'Scratch Up';
     _mainPage.classList.add('main-page');
     _mainPage.appendChild(header);
 
@@ -81,45 +85,6 @@ function restoreProjectList() {
     }
 }
 
-function renderProjectList() {
-    _projUl.innerHTML = '';
-    _projectList.forEach(project => {
-        createProjectListItem(project);
-        createProjectMainSpace(project);
-    });
-}
-
-function createProjectListItem(project) {
-    const projectTitle = project.name;
-    const modifiedId = projectTitle.replace(/\s+/g, '-');
-
-    console.log("project name:createListItem: ",project.name);
-
-    const p_listItem = document.createElement('li');
-    const p_link = document.createElement('a');
-    p_link.textContent = projectTitle;
-    p_link.classList.add('project-list');
-    p_link.href = `#${modifiedId}`;
-    p_listItem.appendChild(p_link);
-    _projUl.appendChild(p_listItem);
-}
-
-function createProjectMainSpace(project) {
-    const projectName = project.name || "untitled";
-    const modifiedId = projectName.replace(/\s+/g, '-');
-
-    const mainProjCont = document.createElement('div');
-    mainProjCont.setAttribute('id', modifiedId);
-    mainProjCont.classList.add('proj-pages');
-
-    const mainProjContTitle = document.createElement('h2');
-    mainProjContTitle.textContent = projectName;
-
-    mainProjCont.appendChild(mainProjContTitle);
-    _mainPage.appendChild(mainProjCont);
-    mainProjCont.style.display = 'none';
-}
-
 function initBaseElements() {
     _sidePanel = document.createElement('div');
     _mainPage = document.createElement('div');
@@ -140,13 +105,11 @@ function initBaseElements() {
 
 export {
     _sidePanel,
+    _mainPage,
     addProjBtn,
     _projUl,
     _projectList,
     restoreProjectList,
     saveProjectListToLocal,
-    renderProjectList,
-    createProjectListItem,
-    createProjectMainSpace,
     initBaseElements
 };
