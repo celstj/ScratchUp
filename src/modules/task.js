@@ -28,7 +28,7 @@ import {
     toggleSectionVisibility,
     renderProjectList,
     createProjectListItem,
-    createProjectMainSpace
+    createProjectMainSpace,
 } from './proj.js';
 
 import {
@@ -45,7 +45,8 @@ import {
 import {
     projectInputElement,
     handleCancelClick,
-    handleConfirmClick
+    handleConfirmClick,
+    createTaskInputElements
 } from './ui.js';
 
 
@@ -73,6 +74,8 @@ function createTaskItem(projectName, taskTitle, taskDescription, taskDueDate, ta
 function renderTaskItem() {
 
 }
+
+
 
 export {
     createTaskItem,

@@ -52,6 +52,7 @@ function createProjectContainer() {
     const projContainer = document.createElement('div');
     projContainer.classList.add('project-container');
     const projListTitle = document.createElement('h3');
+    projListTitle.classList.add('proj-title');
     projListTitle.textContent = "Projects";
     const projNav = document.createElement('nav');
     _projUl = document.createElement('ul');

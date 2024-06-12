@@ -14,7 +14,8 @@ import {
     createInputContainer,
     placeInputContainerOnSide,
     handleCancelClick,
-    handleConfirmClick
+    handleConfirmClick,
+    createTaskInputElements
 } from './ui.js';
 
 
@@ -133,10 +134,23 @@ function createProjectMainSpace(project) {
     const mainProjContTitle = document.createElement('h2');
     mainProjContTitle.textContent = projectName;
 
+    const addNewTaskBtn = document.createElement('div');
+    addNewTaskBtn.classList.add('new-task-btn');
+    addNewTaskBtn.textContent = '+ New Task';
+
     mainProjCont.appendChild(mainProjContTitle);
+    mainProjCont.appendChild(addNewTaskBtn);
     _mainPage.appendChild(mainProjCont);
     mainProjCont.style.display = 'none';
-}
+
+    addNewTaskBtn.addEventListener('click', () => {
+        const existingTaskElement = document.querySelector('.task-creation-container');
+        if (!existingTaskElement){
+        const newTaskElement = createTaskInputElements();
+            document.body.insertBefore(newTaskElement, _sidePanel);
+        }
+    });
+};
 
 // Remove Project List
 function rmProjListItem() {
