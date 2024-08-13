@@ -10,12 +10,7 @@ import {
     formInput,
     inputConfirm, 
     inputCancel,
-    inputContainer,
     createInputContainer,
-    placeInputContainerOnSide,
-    handleCancelClick,
-    handleConfirmClick,
-    createTaskInputElements
 } from './ui.js';
 
 
@@ -36,7 +31,6 @@ function checkProjectList(projectName, addToStorage = true) {
     const newProject = {
         name: projectTitle,
         tasks: [],
-        checklist: [],
         notes: []
     };
 
@@ -88,10 +82,8 @@ function renderProjectList() {
     _projectList.forEach(project => {
         createProjectListItem(project);
         createProjectMainSpace(project);
-        // createTaskListItem()
     });
 }
-
 
 function createProjectListItem(project) {
     const projectTitle = project.name;
@@ -134,22 +126,18 @@ function createProjectMainSpace(project) {
     const mainProjContTitle = document.createElement('h2');
     mainProjContTitle.textContent = projectName;
 
+    const toDoList = document.createElement('ul');
+    toDoList.classList.add('todo-list');
+
     const addNewTaskBtn = document.createElement('div');
     addNewTaskBtn.classList.add('new-task-btn');
     addNewTaskBtn.textContent = '+ New Task';
 
     mainProjCont.appendChild(mainProjContTitle);
+    mainProjCont.appendChild(toDoList);
     mainProjCont.appendChild(addNewTaskBtn);
     _mainPage.appendChild(mainProjCont);
     mainProjCont.style.display = 'none';
-
-    addNewTaskBtn.addEventListener('click', () => {
-        const existingTaskElement = document.querySelector('.task-creation-container');
-        if (!existingTaskElement){
-        const newTaskElement = createTaskInputElements();
-            document.body.insertBefore(newTaskElement, _sidePanel);
-        }
-    });
 };
 
 // Remove Project List
@@ -167,7 +155,6 @@ function rmProjListItem() {
             if (projectIndex !== -1) {
                 _projectList.splice(projectIndex, 1);
                 saveProjectListToLocal();
-                // renderProjectList();
 
                 if (projectMainSpace) {
                     projectMainSpace.remove();
@@ -185,7 +172,6 @@ function rmProjListItem() {
     });
 }
 rmProjListItem();
-
 
 function editProjectListItem() {
     document.addEventListener('click', (e) => {

@@ -96,6 +96,7 @@ a {
 h2 {
     color: var(--d-sage);
     margin-left: 30px;
+    margin-bottom: 20px;
     font-size: 30px;
 }
 
@@ -199,7 +200,7 @@ MAIN PAGE CSS
 }
 
 .new-task-btn {
-    width: 400px;
+    width: 40vw;
     height: 25px;
     font-size: 18px;
     padding-top: 5px;
@@ -207,7 +208,7 @@ MAIN PAGE CSS
     color: var(--o-white);
     background-color: #a5c0b5;
     border-radius: 10px;
-    margin-top: 10px;
+    margin-top: 15px;
     margin-left: 50px;
 }
 
@@ -294,10 +295,87 @@ fieldset {
     padding: 2px;
 }
 
-#task-priority, #task-progress {
+#task-priority-form, #task-progress-form {
     display: inline-block;
 }
 
-#task-priority {
+#task-priority-form {
     margin: 5px 90px 5px 0;
+}
+
+/*
+TASKLIST LABEL
+*/
+
+.tasklist-item > div {
+    display: flex;
+    margin-left: 50px;
+    height: 55px;
+    border-radius: 5px;
+    background-color: #becec0;
+    width: 70%;
+    padding: 15px 15px 5px 15px;
+}
+
+.tasklist-item > div:hover {
+    cursor: pointer;
+    box-shadow: 2px 2px 4px rgba(41,59,59, 0.5);
+}
+
+.priority-circle{
+    position: relative;
+    content: '/u2611';
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    border: 1.5px solid var(--d-green);
+    border-radius: 10px;
+    top: 23%;
+}
+
+.high-priority{
+    background-color: red;
+}
+
+.medium-priority{
+    background-color: yellow;
+}
+
+.low-priority{
+    background-color: cyan;
+}
+
+.task-label-right {
+    display: flex;
+}
+
+.task-title-label {
+    margin: 0 50px 0 40px;
+}
+
+.task-label-description {
+    margin-left: 40px;
+}
+
+.task-label-duedate {
+    margin-left: 30%;
+    width: 150px;
+}
+
+.task-buttons {
+    width: 30px;
+    height: 30px;
+    top: 10px;
+}
+
+.task-edit-btn {
+    position:relative;
+    right: 5%;
+    margin-left: 5%;
+}
+
+.task-delete-btn {
+    position:relative;
+    right: 3%;
+    margin-left: 3%;
 }

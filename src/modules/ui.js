@@ -1,16 +1,12 @@
 import {
     _sidePanel,
     _mainPage,
-    addProjBtn,
     _projUl,
     _projectList
 } from './base.js';
 
 import {    
     checkProjectList,
-    renderProjectList,
-    createProjectListItem,
-    createProjectMainSpace
 } from './proj.js';
 
 let formInput, inputConfirm, inputCancel, inputContainer, taskCreateContainer;
@@ -78,43 +74,48 @@ function createTaskInputElements() {
 
     // task Title creation
     const taskTitle = document.createElement('label');
-    taskTitle.setAttribute('for', 'tTitle');
+    taskTitle.setAttribute('for', 'task-title');
     taskTitle.textContent = 'Title';
 
     const taskTitleInput = document.createElement('input');
     taskTitleInput.setAttribute('type', 'text');
-    taskTitleInput.setAttribute('id', 'tTitle');
-    taskTitleInput.setAttribute('name', 'tTitle');
+    taskTitleInput.setAttribute('id', 'task-title');
+    taskTitleInput.setAttribute('name', 'taskTitle');
     
     // task Description creation
     const taskDescription = document.createElement('label');
-    taskDescription.setAttribute('for', 'taskDescription');
+    taskDescription.setAttribute('for', 'task-description');
     taskDescription.textContent = 'Description';
 
     const taskDescriptionInput = document.createElement('input');
     taskDescriptionInput.setAttribute('type', 'text');
-    taskDescriptionInput.setAttribute('id', 'taskDescription');
+    taskDescriptionInput.setAttribute('id', 'task-description');
     taskDescriptionInput.setAttribute('name', 'taskDescription');
 
     // task due date creation
     const taskDue = document.createElement('label');
-    taskDue.setAttribute('for', 'taskDue');
+    taskDue.setAttribute('for', 'task-due');
     taskDue.textContent = 'Due Date';
 
     const taskDueInput = document.createElement('input');
     taskDueInput.setAttribute('type', 'date');
-    taskDueInput.setAttribute('id', 'taskDue');
+    taskDueInput.setAttribute('id', 'task-due');
     taskDueInput.setAttribute('name', 'taskDue');
+    taskDueInput.setAttribute('max', '9999-12-12');
+
+    taskDueInput.addEventListener('click', () => {
+        taskDueInput.showPicker(); // This triggers the date picker to open
+    });
 
     //task priority creation
     const taskPriorityForm = document.createElement('div');
-    taskPriorityForm.setAttribute('id', 'task-priority');
+    taskPriorityForm.setAttribute('id', 'task-priority-form');
     const taskPriority = document.createElement('legend');
     taskPriority.textContent = 'Priority';
 
     const prioritySelectMenu = document.createElement('select');
-    prioritySelectMenu.setAttribute('id', 'taskPriority');
-    prioritySelectMenu.setAttribute('name', 'taskPriority');
+    prioritySelectMenu.setAttribute('id', 'task-priority');
+    prioritySelectMenu.setAttribute('name', 'task-priority');
 
     const taskPriorityHigh = document.createElement('option');
     taskPriorityHigh.setAttribute('value', 'high priority');
@@ -128,29 +129,6 @@ function createTaskInputElements() {
     const taskPriorityLow = document.createElement('option');
     taskPriorityLow.setAttribute('value', 'low priority');
     taskPriorityLow.textContent = 'Low Priority';
-
-    //task progress creation
-    const taskProgressForm = document.createElement('div');
-    taskProgressForm.setAttribute('id', 'task-progress');
-    const taskProgress = document.createElement('legend');
-    taskProgress.textContent = 'Progress';
-    
-    const progressSelectMenu = document.createElement('select');
-    progressSelectMenu.setAttribute('id', 'taskProgress');
-    progressSelectMenu.setAttribute('name', 'taskProgress');
-
-    const taskProgressNotStarted = document.createElement('option');
-    taskProgressNotStarted.setAttribute('value', 'not started');
-    taskProgressNotStarted.textContent = 'Not Started';
-
-    const taskProgressInProgress = document.createElement('option');
-    taskProgressInProgress.setAttribute('value', 'in progress');
-    taskProgressInProgress.textContent = 'In Progress';
-
-    const taskProgressComplete = document.createElement('option');
-    taskProgressComplete.setAttribute('value', 'complete');
-    taskProgressComplete.textContent = 'Complete';
-
 
     // task confirmation
     const taskConfirm = document.createElement('button');
@@ -171,13 +149,6 @@ function createTaskInputElements() {
     prioritySelectMenu.appendChild(taskPriorityMedium);
     prioritySelectMenu.appendChild(taskPriorityHigh);
 
-    //Append Progress elements
-    taskProgressForm.appendChild(taskProgress);
-    taskProgressForm.appendChild(progressSelectMenu);
-    progressSelectMenu.appendChild(taskProgressNotStarted);
-    progressSelectMenu.appendChild(taskProgressInProgress);
-    progressSelectMenu.appendChild(taskProgressComplete);
-
 /// append elements to form
     taskForm.appendChild(taskHeader);
     taskForm.appendChild(taskTitle);
@@ -193,7 +164,6 @@ function createTaskInputElements() {
     taskForm.appendChild(taskDueInput);
     taskForm.appendChild(document.createElement('br'));
     taskForm.appendChild(taskPriorityForm);
-    taskForm.appendChild(taskProgressForm);
     taskForm.appendChild(document.createElement('br'));
     taskForm.appendChild(taskConfirm);
 
@@ -204,16 +174,75 @@ function createTaskInputElements() {
     return taskCreateContainer;
 }
 
-// document.querySelectorAll('input[type="radio"]').forEach(radio => {
-//     radio.addEventListener('click', function() {
-//         // Uncheck all radios in the same group
-//         document.querySelectorAll(`input[name="${this.name}"]`).forEach(
-//             r => r.removeAttribute('checked'));
-//         // Check the clicked radio
-//         this.setAttribute('checked', 'checked');
-//         console.log(`${this.id} selected`);
-//     });
-// });
+function createTaskList(projectName, newTask, taskIndex) {
+    const taskTitleModifiedId = newTask.title.replace(/\s+/g, '-');
+    const taskListContainer = document.querySelector(`#${projectName} .todo-list`);
+
+    const toDoListItem = document.createElement('li');
+    toDoListItem.classList.add('tasklist-item');
+    toDoListItem.setAttribute('id', `task-${taskIndex}`);
+
+    const taskItemId = document.createElement('div');
+    taskItemId.setAttribute('id', taskTitleModifiedId);
+
+    const taskLabelBoxMain = document.createElement('div');
+    taskLabelBoxMain.classList.add('task-label-main');
+
+    const taskLabelBoxRight = document.createElement('div');
+    taskLabelBoxRight.classList.add('task-label-right');
+
+    const lowPriority = document.createElement('div');
+    lowPriority.classList.add('priority-circle', 'low-priority');
+
+    const mediumPriority = document.createElement('div');
+    mediumPriority.classList.add('priority-circle', 'medium-priority');
+    
+    const highPriority = document.createElement('div');
+    highPriority.classList.add('priority-circle', 'high-priority');
+
+    const taskPriority = newTask.priority;
+    
+    if (taskPriority === 'low priority') {
+        taskItemId.appendChild(lowPriority);
+    } else if (taskPriority === 'medium priority') {
+        taskItemId.appendChild(mediumPriority);
+    } else {
+        taskItemId.appendChild(highPriority);
+    }
+
+    const taskLabel = document.createElement('h3');
+    taskLabel.classList.add('task-title-label');
+    taskLabel.textContent = `${newTask.title}`;
+
+    const taskLabelDescription = document.createElement('p');
+    taskLabelDescription.classList.add('task-label-description');
+    taskLabelDescription.textContent = `${newTask.description}`;
+
+    const taskLabelDueDate = document.createElement('p');
+    taskLabelDueDate.classList.add('task-label-duedate');
+    taskLabelDueDate.textContent = `${newTask.dueDate}`;
+
+    const taskLabelEdit = document.createElement('button');
+    taskLabelEdit.classList.add('task-buttons', 'task-edit-btn');
+    taskLabelEdit.textContent = '\uD83D\uDD89';
+
+    const taskLabelDelete = document.createElement('button');
+    taskLabelDelete.classList.add('task-buttons', 'task-delete-btn');
+    taskLabelDelete.innerHTML = '&#128465;';
+
+    taskLabelBoxMain.appendChild(taskLabel);
+    taskLabelBoxMain.appendChild(taskLabelDescription);
+
+    taskLabelBoxRight.appendChild(taskLabelDueDate);
+    taskLabelBoxRight.appendChild(taskLabelEdit);
+    taskLabelBoxRight.appendChild(taskLabelDelete);
+
+    taskItemId.appendChild(taskLabelBoxMain);
+    taskItemId.appendChild(taskLabelBoxRight);
+    toDoListItem.appendChild(taskItemId);
+    taskListContainer.appendChild(toDoListItem);
+}
+
 
 export {
     formInput,
@@ -225,5 +254,6 @@ export {
     placeInputContainerOnSide,
     handleCancelClick,
     handleConfirmClick,
-    createTaskInputElements
+    createTaskInputElements,
+    createTaskList
 };

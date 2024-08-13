@@ -1,10 +1,11 @@
 import {
-    checkProjectList,
-    toggleSectionVisibility,
     renderProjectList,
-    createProjectListItem,
     createProjectMainSpace
 } from './proj.js';
+
+import {
+    renderTaskList
+} from './task.js';
 
 let _sidePanel, _mainPage, addProjBtn, _projUl;
 let _projectList = [];
@@ -29,23 +30,44 @@ function createNavigation() {
     const ul = document.createElement('ul');
 
     const mainLinks = [
-        { text: 'Home', url: 'index.html' },
-        { text: 'Today', url: '#' },
+        { text: 'Today', url: '#today' },
+        { text: 'Upcoming', url: '#upcoming' },
     ];
 
     mainLinks.forEach(link => {
         const mainLi = document.createElement('li');
         const anchor = document.createElement('a');
+        const lowerLink = link.text.toLowerCase();
         anchor.textContent = link.text;
         anchor.href = link.url;
-        mainLi.classList.add('main-list');
+        mainLi.classList.add(lowerLink);
+        anchor.classList.add('project-list');
         mainLi.appendChild(anchor);
         ul.appendChild(mainLi);
+
+        createBaseMain(link.text);
     });
 
     nav.appendChild(ul);
 
     return nav;
+}
+
+function createBaseMain(mainLink) {
+    const mainProjCont = document.createElement('div');
+    const lowerLink = mainLink.toLowerCase();
+    mainProjCont.setAttribute('id', lowerLink);
+    mainProjCont.classList.add('proj-pages');
+
+    const mainProjContTitle = document.createElement('h2');
+    mainProjContTitle.textContent = mainLink;
+
+    const toDoList = document.createElement('ul');
+    toDoList.classList.add('todo-list');
+
+    mainProjCont.appendChild(mainProjContTitle);
+    mainProjCont.appendChild(toDoList);
+    _mainPage.appendChild(mainProjCont);
 }
 
 function createProjectContainer() {
@@ -81,6 +103,7 @@ function restoreProjectList() {
         _projectList = JSON.parse(storedProjects);
         console.log("DATA restored");
         renderProjectList();
+        renderTaskList();
     }else {
         console.log("unable to restore DATA");
     }

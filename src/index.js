@@ -18,10 +18,12 @@ import {
 import {
     checkProjectList,
     toggleSectionVisibility,
-    renderProjectList,
-    createProjectListItem,
-    createProjectMainSpace
 } from './modules/proj.js';
+
+import {
+    todayUpComingTasks,
+} from './modules/task.js';
+
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -30,6 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize the application
     restoreProjectList();
+
+    // render Today and Upcoming's tasks
+    todayUpComingTasks();
 
     // Add starter project if no projects exist in local storage
     if (!_projectList.length) {
@@ -53,6 +58,11 @@ document.addEventListener('DOMContentLoaded', () => {
             toggleSectionVisibility(sectionId);
         }
     });
-});
 
-    
+    const upcomingNav = document.querySelector('#upcoming');
+
+    if (upcomingNav) {
+        upcomingNav.style.display = 'none';
+    }
+
+});
