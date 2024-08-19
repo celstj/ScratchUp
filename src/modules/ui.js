@@ -201,7 +201,7 @@ function createTaskList(projectName, newTask, taskIndex) {
     highPriority.classList.add('priority-circle', 'high-priority');
 
     const taskPriority = newTask.priority;
-    
+
     if (taskPriority === 'low priority') {
         taskItemId.appendChild(lowPriority);
     } else if (taskPriority === 'medium priority') {
@@ -209,6 +209,15 @@ function createTaskList(projectName, newTask, taskIndex) {
     } else {
         taskItemId.appendChild(highPriority);
     }
+
+    const taskCompleted = newTask.completed;
+
+    taskCompleted ? taskItemId.classList.add('task-complete') : taskItemId.classList.remove('task-complete');
+    // if (taskCompleted === true) {
+    //     taskItemId.classList.add('task-complete');
+    // } else {
+
+    // }
 
     const taskLabel = document.createElement('h3');
     taskLabel.classList.add('task-title-label');

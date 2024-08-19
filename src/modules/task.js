@@ -230,6 +230,36 @@ function handleDeleteTask() {
 }
 handleDeleteTask();
 
+function handleTaskStrikeOut() {
+    document.addEventListener('click',(e) => {
+        e.preventDefault();
+        
+        currentParentDiv = e.target.closest('.tasklist-item'); 
+
+        if (currentParentDiv) {
+            const projectId = e.target.closest('.proj-pages').id;
+            const projectName = projectId.replace(/-/g, ' ');
+            const listTaskID = e.target.closest('[id^="task-"]');
+            const taskIndex = listTaskID.id.split('-')[1];
+            const taskDiv = currentParentDiv.querySelector('[id]');
+        
+            const project = _projectList.find(proj => proj.name === projectName);
+            const getTaskIndex = project.tasks[taskIndex];
+
+            if (getTaskIndex.completed === false){
+                getTaskIndex.completed = true;
+                taskDiv.classList.add('task-complete');
+                console.log('taskcomplete class added', taskDiv);
+            } else {
+                getTaskIndex.completed = false;
+                taskDiv.classList.remove('task-complete');
+            } 
+            saveProjectListToLocal();   
+        }   
+    });
+}
+handleTaskStrikeOut();
+
 function todayUpComingTasks() {
     const today = new Date();
     const todayFormatted = today.toISOString().split('T')[0]; 

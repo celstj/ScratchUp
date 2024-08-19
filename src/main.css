@@ -313,7 +313,7 @@ TASKLIST LABEL
     height: 55px;
     border-radius: 5px;
     background-color: #becec0;
-    width: 70%;
+    width: 80%;
     padding: 15px 15px 5px 15px;
 }
 
@@ -323,26 +323,27 @@ TASKLIST LABEL
 }
 
 .priority-circle{
-    position: relative;
+    position: absolute;
     content: '/u2611';
-    width: 20px;
+    width: 7px;
     height: 20px;
     cursor: pointer;
-    border: 1.5px solid var(--d-green);
-    border-radius: 10px;
-    top: 23%;
+    border: transparent;
+    border-radius: 5px;
+    /* top: -5px; */
+    left: 63px;
 }
 
 .high-priority{
-    background-color: red;
+    background-color: rgb(247, 78, 78);
 }
 
 .medium-priority{
-    background-color: yellow;
+    background-color: rgb(255, 158, 78);
 }
 
 .low-priority{
-    background-color: cyan;
+    background-color: rgb(244, 247, 72);
 }
 
 .task-label-right {
@@ -350,32 +351,40 @@ TASKLIST LABEL
 }
 
 .task-title-label {
-    margin: 0 50px 0 40px;
+    margin: 0 0 0 20px;
+    width: 150px;
 }
 
 .task-label-description {
-    margin-left: 40px;
+    margin-left: 20px;
 }
 
 .task-label-duedate {
-    margin-left: 30%;
+    margin-left: 10vw;
     width: 150px;
 }
 
 .task-buttons {
+    position: relative;
+    right: 10vw;
     width: 30px;
     height: 30px;
     top: 10px;
 }
 
 .task-edit-btn {
-    position:relative;
-    right: 5%;
+    position: relative;
+    right: 4%;
     margin-left: 5%;
 }
 
 .task-delete-btn {
-    position:relative;
+    position: relative;
     right: 3%;
     margin-left: 3%;
+}
+
+.tasklist-item > div.task-complete {
+    background-color: #7d8b87;
+    text-decoration: line-through;
 }
