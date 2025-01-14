@@ -1,6 +1,6 @@
 TODO list project for The Odin
 
-LIVE: https://celstj.github.io/todo/
+LIVE: https://celstj.github.io/ScratchUp/
 
 to do list TODO
  - layout setup
